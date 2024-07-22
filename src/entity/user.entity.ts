@@ -1,13 +1,20 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Role } from "../core/constants/common.constant";
 
 @Entity()
 export class User{
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
 
     @Column()
-    firstName: string
+    name: string;
+    
+    @Column()
+    username: string;
 
     @Column()
-    lastName: string
-}
+    password: string;
+
+    @Column({default: Role.USER})
+    role: Role;
+}   
