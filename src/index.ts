@@ -1,11 +1,11 @@
 import dotenv from "dotenv";
 import express, { Express } from 'express';
-import { myDataSource } from "./core/config/data-source.config";
+import { myDataSource } from "./core/database/config/data-source.config";
 import adminRouters from "./module/routers/user.route"
 const morgan = require('morgan')
 const handlebars = require('express-handlebars');
 const path = require('path');
-const route = require('./routes/index')
+const route = require('../src/components/routes/index')
 const cookieParser = require('cookie-parser')
 const methodOverride = require('method-override')
 
