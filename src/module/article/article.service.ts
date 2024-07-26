@@ -11,4 +11,8 @@ export class ArticleService {
     async createArticle() {
 
     }
+    async getArticles(){
+        const articles = await this.userRepository.find();
+        return articles;
+    }
 }

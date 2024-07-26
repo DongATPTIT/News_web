@@ -1,20 +1,19 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user.entity";
 import { Article } from "./article.entity";
+import { BaseEntity } from "./base.entity";
 
-export class Comment {
+@Entity()
+export class Comment extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
     content: string;
 
-    @Column()
-    user: User;
-
-    @Column()
+    @ManyToOne(() => Article, article => article.comment)
     article: Article;
 
-    @Column()
-    createdAt: Date;
+    @ManyToOne(() => User, (user) => user.comments)
+    user: User;
 }
