@@ -6,15 +6,18 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({nullable:true})
-    name: string;
+    @Column({ nullable: true })
+    name?: string;
 
     @Column()
-    username?: string;
+    username: string;
 
     @Column()
     password: string;
 
     @Column({ default: Role.USER })
     role: Role;
+
+    @Column({ default: null })
+    token: string;
 }   

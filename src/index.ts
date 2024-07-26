@@ -1,7 +1,9 @@
 import dotenv from "dotenv";
 import express, { Express } from 'express';
 import { myDataSource } from "./core/database/config/data-source.config";
-import adminRouters from "./module/routers/user.route"
+import adminRouters from "./module/routers/admin.route"
+import clientRouters from "./module/routers/client.router"
+
 const morgan = require('morgan')
 const handlebars = require('express-handlebars');
 const path = require('path');
@@ -22,6 +24,8 @@ myDataSource
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(
     morgan('dev'),
     cookieParser(),
@@ -30,8 +34,7 @@ app.use(
         extended: true,
     }),
     express.json(),
-    express.static(path.join(__dirname, 'public'))
-)
+    express.static(path.join(__dirname, 'components', 'public')))
 
 app.engine(
     'hbs',
@@ -43,8 +46,9 @@ app.engine(
     }),
 )
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resources', 'views'));
-app.use('/', adminRouters)
+app.set('views', path.join(__dirname, 'components', 'resources', 'views'));
+app.use('/admin', adminRouters)
+app.use('/client', clientRouters)
 route(app)
 
 app.listen(port, () => {

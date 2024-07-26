@@ -1,6 +1,6 @@
-import { myDataSource } from "../src/core/config/data-source.config";
+import { myDataSource } from "../src/core/database/config/data-source.config";
 import { Role } from "../src/core/constants/common.constant";
-import { User } from "../src/entity/user.entity";
+import { User } from "../src/core/database/entity/user.entity";
 import * as bcrypt from 'bcrypt';
 
 
@@ -9,8 +9,7 @@ async function createUsers() {
     const userRepository = myDataSource.getRepository(User);
 
     const admin = { username: "admin", name: "admin", password: "admin", role: Role.ADMIN }
-    admin.password = await bcrypt.hash(admin.password,10)
-    // const newUser = userRepository.create();
+    admin.password = await bcrypt.hash(admin.password, 10)
     await userRepository.save(admin);
     await myDataSource.destroy();
 }
