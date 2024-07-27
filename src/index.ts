@@ -41,7 +41,7 @@ app.engine(
     handlebars.engine({
         extname: '.hbs',
         helpers: {
-
+            eq: (a: any, b: any) => a === b
         }
     }),
 )

@@ -17,8 +17,7 @@ export class AdminController {
         try {
             const body: createAccountDto = req.body;
             const dataAmin = { ...body, role: Role.ADMIN }
-            const newUser = await this.userService.createAccount(res, req, dataAmin);
-            res.send(successMessage(newUser));
+            this.userService.createAccount(res, req, dataAmin);
         }
         catch (err: any) {
             res.status(500).send({

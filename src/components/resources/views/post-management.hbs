@@ -1,0 +1,98 @@
+<div class="main-content">
+    <div class="user-management">
+        <h1>Quản lý Bài Viết</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Content</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Image URL</th>
+                    <th>Published</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each articles}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.content}}</td>
+                    <td>{{this.title}}</td>
+                    <td>{{this.description}}</td>
+                    <td>{{this.imageUrl}}</td>
+                    <td>{{#if this.published}}&#10004;{{/if}}</td>
+                    <td>{{this.author}}</td>
+                    <td>{{this.category.name}}</td>
+                    <td>
+                        <button class="edit-button" data-id="{{this.id}}">Sửa</button>
+                        <button class="delete-button" data-id="{{this.id}}">Xóa</button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Edit Article Modal -->
+{{#each articles}}
+<div id="edit-article-modal-{{this.id}}" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Cập nhật thông tin bài viết</h2>
+        <form action="admin/article/{{this.id}}" method="post" id="edit-article-form-{{this.id}}">
+            <!-- Trường ẩn để chỉ định hành động PUT -->
+            <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="id" value="{{this.id}}">
+            <div class="form-group">
+                <label for="article-content-{{this.id}}">Content:</label>
+                <textarea id="article-content-{{this.id}}" name="content" required>{{this.content}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="article-title-{{this.id}}">Title:</label>
+                <input type="text" id="article-title-{{this.id}}" name="title" value="{{this.title}}" required>
+            </div>
+            <div class="form-group">
+                <label for="article-description-{{this.id}}">Description:</label>
+                <textarea id="article-description-{{this.id}}" name="description"
+                    required>{{this.description}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="article-keyword-{{this.id}}">Keyword:</label>
+                <input type="text" id="article-keyword-{{this.id}}" name="keyword" value="{{this.keyword}}">
+            </div>
+            <div class="form-group">
+                <label for="article-imageUrl-{{this.id}}">Image URL:</label>
+                <input type="url" id="article-imageUrl-{{this.id}}" name="imageUrl" value="{{this.imageUrl}}" required>
+            </div>
+            <div class="form-group">
+                <label for="article-author-{{this.id}}">Author:</label>
+                <input type="text" id="article-author-{{this.id}}" name="author" value="{{this.author}}" required>
+            </div>
+            <div class="form-group">
+                <label for="article-published-{{this.id}}">Published:</label>
+                <input type="checkbox" id="article-published-{{this.id}}" name="published" {{#if
+                    this.published}}checked{{/if}}>
+            </div>
+            <!-- Uncomment and use if categories are needed -->
+            <!--
+    <div class="form-group">
+        <label for="article-category-{{this.id}}">Category:</label>
+        <select id="article-category-{{this.id}}" name="category" required>
+            {{#each ../categories}}
+            <option value="{{this.id}}" {{#ifEquals this.id ../category.id}}selected{{/ifEquals}}>
+                {{this.name}}
+            </option>
+            {{/each}}
+        </select>
+    </div>
+    -->
+            <button type="submit">Lưu</button>
+        </form>
+
+    </div>
+</div>
+{{/each}}

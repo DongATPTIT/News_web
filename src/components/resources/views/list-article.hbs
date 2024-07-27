@@ -1,9 +1,61 @@
-<ul>
-    {{#each articles}}
-    <li>
-        {{this.id}}
-        {{this.content}}
-    </li>
-    {{/each}}
-</ul>
-<h2>{{f}}</h2>
+<body>
+    <div class="user-management">
+        <h1>Quản lý Tài khoản</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Content</th>
+                    <th>Description</th>
+                    <th>Publised</th>
+                    <th>Author</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each articles}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.content}}</td>
+                    <td>{{this.title}}</td>
+                    <td>{{this.description}}</td>
+                    <td>{{this.imageUrl}}</td>
+                    <td>{{this.publised}}</td>
+                    <td>{{this.author}}</td>
+                    <td>
+                        <button class="edit-button" data-id="{{this.id}}">Sửa</button>
+                        <button class="delete-button" data-id="{{this.id}}">Xóa</button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div id="edit-user-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Cập nhật thông tin người dùng</h2>
+            <form id="edit-user-form">
+                <input type="hidden" id="user-id">
+                <div class="form-group">
+                    <label for="user-name">Name:</label>
+                    <input type="text" id="user-name">
+                </div>
+                <div class="form-group">
+                    <label for="user-username">Username:</label>
+                    <input type="text" id="user-username">
+                </div>
+                <div class="form-group">
+                    <label for="user-password">Password:</label>
+                    <input type="text" id="user-password">
+                </div>
+                <button type="submit">Lưu</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/path/to/your/js/file.js"></script>
+</body>
+
+</html>

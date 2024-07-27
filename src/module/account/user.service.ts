@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { Request, Response } from "express";
 import { LogInDto } from "./dtos/login.dto";
 import { jwtSign } from "../../core/auth/jwt.service";
+import { Role } from "../../core/constants/common.constant";
 
 export class UserService {
     private userRepository: Repository<User>;
@@ -22,11 +23,9 @@ export class UserService {
                 res.status(400).send('Tên tài khoản đã tồn tại.');
             }
             data.password = await bcrypt.hash(data.password, 10);
-            const newUser = await this.userRepository.save(data);
-            return {
-                message: 'Tạo người dùng thành công',
-                username: newUser.username,
-            };
+            await this.userRepository.save(data);
+            res.redirect('/admin/login');
+
         }
         catch (err) {
             console.log("Internal server Error");
@@ -48,9 +47,9 @@ export class UserService {
             if (!checkPassword) {
                 return res.status(400).send('Tên đăng nhập hoặc mật khẩu không hợp lệ');
             }
-            console.log('hello')
             const accessToken = await jwtSign(user.id, user.username, user.role);
             await this.userRepository.update(user.id, { token: accessToken })
+            console.log(accessToken)
             res.cookie('token', accessToken)
             res.redirect('/admin/dashboard');
             // return res.status(200).json({ accessToken });/
@@ -59,5 +58,9 @@ export class UserService {
             console.log(err);
             return res.status(500).send('Internal server error');
         }
+    }
+    async getUser() {
+        const user = await this.userRepository.find({ where: { role: Role.USER } })
+        return user;
     }
 }

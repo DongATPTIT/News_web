@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Category } from "./category.entity";
 import { Comment } from "./comment.entity";
 
@@ -28,9 +28,16 @@ export class Article {
     @Column()
     author: string;
 
-    @ManyToOne(() => Category, category => category.article)
-    category: Category
+    @ManyToOne(() => Category)
+    @JoinColumn({ name: 'categoryId' })
+    category: Category;
+
+    @Column({ nullable: true })
+    categoryId: number;
 
     @OneToMany(() => Comment, comment => comment.article)
     comment: Comment[]
+
+    @Column({ default: 0 })
+    view: number;
 }

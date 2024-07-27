@@ -7,7 +7,7 @@ import { myDataSource } from "../database/config/data-source.config";
 
 export const isAuth = async (req: Request | any, res: Response, next: NextFunction) => {
     try {
-        const accessTokenFromHeader = req.headers['x-authorization'];
+        const accessTokenFromHeader = req.headers['token'];
         if (!accessTokenFromHeader) {
             return res.status(401).send('Không tìm thấy access token!');
         }
