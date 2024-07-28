@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { UserService } from "./user.service";
+import { LogInDto } from "./dtos/login.dto";
 
 export class AccountController {
     private userService: UserService;
@@ -26,5 +27,11 @@ export class AccountController {
         const id = Number(req.params.id);
         await this.userService.delete(id);
         res.redirect('/admin/dashboard/account-management')
+    }
+
+    login = async (req: Request, res: Response) => {
+        const body: LogInDto = req.body;
+        console.log("req", req);
+        await this.userService.login(res, req, body);
     }
 }

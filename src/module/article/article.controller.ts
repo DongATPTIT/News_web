@@ -31,6 +31,7 @@ export class ArticleController {
 
     getTopPost = async (req: Request, res: Response) => {
         const articleTop = await this.articlesService.getTopPost();
+        console.log(articleTop)
         res.render('top-posts', {
             layout: 'dashboard',
             articleTop

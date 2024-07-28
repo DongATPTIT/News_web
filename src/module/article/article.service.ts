@@ -86,7 +86,7 @@ export class ArticleService {
                 .orderBy('article.view', 'DESC')
                 .limit(10)
                 .getMany();
-            return
+            return articleRepository
         }
         catch (err) {
             console.log(err);

@@ -17,8 +17,7 @@ export class ClientController {
     createClient = async (req: Request, res: Response) => {
         try {
             const body: createAccountDto = req.body;
-            const newUser = await this.userService.createAccount(res, req, body);
-            res.send(successMessage(newUser));
+            await this.userService.createAccount(res, req, body);
         }
         catch (err: any) {
             res.status(500).send({
@@ -69,6 +68,6 @@ export class ClientController {
         });
     }
     getLogOut = async (req: Request, res: Response) => {
-        res.redirect("/");
+        res.clearCookie('token').redirect('/');
     };
 }

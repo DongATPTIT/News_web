@@ -10,9 +10,6 @@ export class AdminController {
     constructor() {
         this.userService = new UserService();
     }
-    test(req: Request, res: Response) {
-        res.send("haha")
-    }
     createAdmin = async (req: Request, res: Response) => {
         try {
             const body: createAccountDto = req.body;
@@ -26,11 +23,6 @@ export class AdminController {
         }
     }
 
-    login = async (req: Request, res: Response) => {
-        const body: LogInDto = req.body;
-        console.log("req", req);
-        await this.userService.login(res, req, body);
-    }
 
     renderHome = async (req: Request, res: Response) => {
         res.render('dashboard', {
@@ -42,4 +34,8 @@ export class AdminController {
         const user = req.user;
         res.send(`Hello, ${user.username}`);
     };
+
+    getLogout = async (req: Request, res: Response) => {
+        res.clearCookie('token').redirect('/');
+    }
 }

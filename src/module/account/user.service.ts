@@ -16,16 +16,16 @@ export class UserService {
     }
     async createAccount(res: Response, req: Request, data: createAccountDto) {
         try {
+            console.log(data)
             const userExist = await this.userRepository.findOne({
                 where: { username: data.username }
             })
-            if (userExist) {
-                res.status(400).send('Tên tài khoản đã tồn tại.');
+            if (userExist || userExist != null) {
+                res.status(400).json('Tên tài khoản đã tồn tại.');
             }
             data.password = await bcrypt.hash(data.password, 10);
             await this.userRepository.save(data);
-            res.redirect('/admin/login');
-
+            res.redirect('/');
         }
         catch (err) {
             console.log("Server Lỗi");
@@ -35,7 +35,6 @@ export class UserService {
 
     async login(res: Response, req: Request, userInfo: LogInDto) {
         try {
-            console.log("user", req.body)
             const user = await this.userRepository.findOne({ where: { username: userInfo.username } });
             if (!user) {
                 return res.status(400).send("Người dùng không tồn tại")
@@ -44,15 +43,14 @@ export class UserService {
                 userInfo.password,
                 user.password,
             );
+            console.log(checkPassword)
             if (!checkPassword) {
                 return res.status(400).send('Tên đăng nhập hoặc mật khẩu không hợp lệ');
             }
             const accessToken = await jwtSign(user.id, user.username, user.role);
             await this.userRepository.update(user.id, { token: accessToken })
-            console.log(accessToken)
             res.cookie('token', accessToken)
-            res.redirect('/admin/dashboard');
-            // return res.status(200).json({ accessToken });/
+            res.redirect(user.role == Role.USER ? '/client/home' : '/admin/dashboard')
         }
         catch (err) {
             console.log(err);

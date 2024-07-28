@@ -3,11 +3,13 @@ import express, { Express } from 'express';
 import { myDataSource } from "./core/database/config/data-source.config";
 import adminRouters from "./module/routers/admin.route"
 import clientRouters from "./module/routers/client.router"
-
+import { isAuth } from "./core/auth/authen.gaurd";
+import { checkRole } from "./core/middleware/checkRole.middleware";
+import { Role } from "./core/constants/common.constant";
+const auth = require('../src/module/routers/auth');
 const morgan = require('morgan')
 const handlebars = require('express-handlebars');
 const path = require('path');
-const route = require('../src/components/routes/index')
 const cookieParser = require('cookie-parser')
 const methodOverride = require('method-override')
 
@@ -47,9 +49,9 @@ app.engine(
 )
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'components', 'resources', 'views'));
-app.use('/admin', adminRouters)
-app.use('/client', clientRouters)
-route(app)
+app.use('/admin', isAuth, checkRole(Role.ADMIN), adminRouters)
+app.use('/client', isAuth, checkRole(Role.USER), clientRouters)
+app.use('/', auth)
 
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
