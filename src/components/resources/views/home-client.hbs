@@ -1,0 +1,12 @@
+<div class="list-card">
+    {{#each articles}}
+    <a href="/client/post/{{this.id}}" class="item-post">
+        <div class="card" style="width: 18rem;">
+            <img src={{this.imageUrl}} class="card-img-top" alt="..." />
+            <div class="card-body">
+                <p class="card-text">{{this.title}}</p>
+            </div>
+        </div>
+    </a>
+    {{/each}}
+</div>

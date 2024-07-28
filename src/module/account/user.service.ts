@@ -63,4 +63,23 @@ export class UserService {
         const user = await this.userRepository.find({ where: { role: Role.USER } })
         return user;
     }
+
+    async update(res: Response, id: number, data: any) {
+        const article = await this.userRepository.findOne({ where: { id } });
+        if (!article) {
+            // res.send(`Article with id ${id} not found`);
+        }
+        const user = await this.userRepository.update(id, data);
+        return user;
+    }
+
+    async getDetail(id: number) {
+        const user = await this.userRepository.findOne({ where: { id } });
+        return user;
+    }
+
+    async delete(id: number) {
+        const user = await this.userRepository.delete(id);
+        return user;
+    }
 }

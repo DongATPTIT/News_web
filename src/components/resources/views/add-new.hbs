@@ -1,1 +1,42 @@
-<p>adđ new</p>
+<div class="form-container">
+    <form action="/admin/create/article" method="POST" class="styled-form">
+        <h2>Thêm Bài Viết Mới</h2>
+        <div class="form-group">
+            <label for="title">Tiêu đề:</label>
+            <input type="text" id="title" name="title" />
+        </div>
+        <div class="form-group">
+            <label for="content">Nội dung:</label>
+            <textarea id="content" name="content" maxlength="5000"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="description">Mô tả:</label>
+            <input type="text" id="description" name="description" />
+        </div>
+        <div class="form-group">
+            <label for="keywords">Từ khoá:</label>
+            <input type="text" id="keywords" name="keywords" />
+        </div>
+        <div class="form-group">
+            <label for="imageUrl">Đường dẫn ảnh:</label>
+            <input type="text" id="imageUrl" name="imageUrl" />
+        </div>
+        <div class="form-group">
+            <label for="published">Công khai:</label>
+            <input type="checkbox" id="published" name="published" />
+        </div>
+        <div class="form-group">
+            <label for="author">Tác giả:</label>
+            <input type="text" id="author" name="author" />
+        </div>
+        <div class="form-group">
+            <label for="categoryId">Chủ đề:</label>
+            <select id="categoryId" name="categoryId">
+                <option value="20">Ẩm thực</option>
+                <option value="14">Bất động sản</option>
+                <!-- Thêm các tùy chọn khác tại đây -->
+            </select>
+        </div>
+        <button type="submit" class="submit-button">Thêm ngay</button>
+    </form>
+</div>

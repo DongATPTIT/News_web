@@ -7,6 +7,6 @@ export class ArticleDto {
     keyword?: string;
     imageUrl?: string;
     published?: boolean;
+    view?: number;
     author?: string;
-    categoryId?: number;
 }

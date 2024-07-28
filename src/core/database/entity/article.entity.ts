@@ -16,7 +16,7 @@ export class Article {
     @Column({ type: "text" })
     description: string;
 
-    @Column()
+    @Column({ default: "" })
     keyword: string;
 
     @Column()

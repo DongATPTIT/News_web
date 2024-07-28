@@ -23,6 +23,20 @@ export class ArticleController {
         })
     }
 
+    createArticle = async (req: Request, res: Response) => {
+        res.render('add-new', {
+            layout: 'dashboard',
+        })
+    }
+
+    getTopPost = async (req: Request, res: Response) => {
+        const articleTop = await this.articlesService.getTopPost();
+        res.render('top-posts', {
+            layout: 'dashboard',
+            articleTop
+        })
+    }
+
     getTab = async (req: Request, res: Response) => {
         const articles = await this.articlesService.getArticles();
         const { tab } = req.params;
@@ -32,22 +46,35 @@ export class ArticleController {
         })
     }
 
-    createArticle = async (req: Request, res: Response) => {
+    addArticle = async (req: Request, res: Response) => {
         const data: ArticleDto = req.body;
-        const articles = await this.articlesService.createArticle(data);
-        res.send(articles)
+        const newArticle = { ...data, categoryId: 1 };
+        console.log(newArticle)
+        await this.articlesService.createArticle(newArticle);
+        res.redirect('/admin/dashboard/post-management')
     }
+
+    // clientGetArticle = async (req: Request, res: Response) => {
+    //     const articles = await this.articlesService.getArticles();
+    //     res.render('/client/home', {
+    //         layout: 'client',
+    //         articles
+    //     })
+    // }
 
     update = async (req: Request, res: Response) => {
         const id = Number(req.params.id);
         const body = req.body;
-        const update = await this.articlesService.update(res, id, body);
-        res.send(update);
+        delete body?._method;
+        body.categoryId = 1;
+        this.articlesService.update(res, id, body);
+        res.redirect('/admin/dashboard/post-management')
+
     }
 
     delete = async (req: Request, res: Response) => {
         const id = Number(req.params.id);
-        const deleteArticle = await this.articlesService.delete(res, id);
-        res.send(deleteArticle);
+        await this.articlesService.delete(res, id);
+        res.redirect('/admin/dashboard/post-management')
     }
 }

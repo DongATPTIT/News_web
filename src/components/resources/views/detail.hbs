@@ -1,0 +1,26 @@
+<div class="detail">
+    <div class="left-detail">
+        <img src="{{post.imageUrl}}" alt="Post Image" />
+    </div>
+    <div class="right-detail">
+        <h4>{{post.title}}</h4>
+        <h6>{{post.description}}</h6>
+        <p>{{post.content}}</p>
+        <p>Tác giả: {{post.author}}</p>
+        <p>Từ khoá: {{post.keyword}}</p>
+        <p>Lượt xem: {{post.view}}</p>
+
+        <div class="list-category">
+            {{#each categories}}
+            <a href="/client/post/{{this.id}}" class="item-post">
+                <div class="card">
+                    <img src="{{this.imageUrl}}" class="card-img-top" alt="Category Image" />
+                    <div class="card-body">
+                        <p class="card-text">{{this.title}}</p>
+                    </div>
+                </div>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</div>

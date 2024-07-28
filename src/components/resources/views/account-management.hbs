@@ -1,14 +1,14 @@
-<body>
+<div class="main-content">
     <div class="user-management">
-        <h1>Quản lý Tài khoản</h1>
+        <h1>Quản Lý Tài Khoản</h1>
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
+                    <th>#</th>
+                    <th>Tên</th>
                     <th>Username</th>
-                    <th>Created At</th>
-                    <th>Actions</th>
+                    <th>Ngày tạo</th>
+                    <th>Hành động</th>
                 </tr>
             </thead>
             <tbody>
@@ -17,42 +17,47 @@
                     <td>{{this.id}}</td>
                     <td>{{this.name}}</td>
                     <td>{{this.username}}</td>
-                    <td>{{this.createdAt}}</td>
-                    <td>
+                    <td>{{this.updatedAt}}</td>
+                    <td class="action-buttons">
                         <button class="edit-button" data-id="{{this.id}}">Sửa</button>
-                        <button class="delete-button" data-id="{{this.id}}">Xóa</button>
+                        <form action="/admin/delete/user/{{this.id}}" method="GET" class="delete-form">
+                            <input type="hidden" name="_method" value="get">
+                            <button type="submit" class="delete-button" data-id="{{this.id}}">Xóa</button>
+                        </form>
                     </td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
     </div>
+</div>
 
-    <!-- Edit User Modal -->
-    <div id="edit-user-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Cập nhật thông tin người dùng</h2>
-            <form id="edit-user-form">
-                <input type="hidden" id="user-id">
-                <div class="form-group">
-                    <label for="user-name">Name:</label>
-                    <input type="text" id="user-name">
-                </div>
-                <div class="form-group">
-                    <label for="user-username">Username:</label>
-                    <input type="text" id="user-username">
-                </div>
-                <div class="form-group">
-                    <label for="user-password">Password:</label>
-                    <input type="text" id="user-password">
-                </div>
-                <button type="submit">Lưu</button>
-            </form>
-        </div>
+<!-- Edit Article Modal -->
+{{#each users}}
+<div id="edit-article-modal-{{this.id}}" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Cập nhật thông tin người dùng</h2>
+        <form action="/admin/update/user/{{this.id}}" method="POST" id="edit-article-form-{{this.id}}">
+            <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="id" value="{{this.id}}">
+            <div class="form-group">
+                <label for="article-content-{{this.id}}">Name:</label>
+                <textarea id="article-content-{{this.id}}" name="name">{{this.name}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="article-title-{{this.id}}">Username:</label>
+                <input type="text" id="article-title-{{this.id}}" name="username" value="{{this.username}}">
+            </div>
+            <button type="submit">Lưu</button>
+        </form>
     </div>
+</div>
+{{/each}}
 
-    <script src="/path/to/your/js/file.js"></script>
+
+
+<script src="/path/to/your/js/file.js"></script>
 </body>
 
 </html>

@@ -1,34 +1,31 @@
 <div class="main-content">
     <div class="user-management">
-        <h1>Quản lý Bài Viết</h1>
+        <h1>Quản Lý Bài Viết</h1>
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Content</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Image URL</th>
-                    <th>Published</th>
-                    <th>Author</th>
-                    <th>Category</th>
-                    <th>Actions</th>
+                    <th>#</th>
+                    <th>Tiêu đề</th>
+                    <th>Mô tả</th>
+                    <th>Tác giả</th>
+                    <th>Lượt xem</th>
+                    <th>Hành động</th>
                 </tr>
             </thead>
             <tbody>
                 {{#each articles}}
                 <tr>
                     <td>{{this.id}}</td>
-                    <td>{{this.content}}</td>
                     <td>{{this.title}}</td>
                     <td>{{this.description}}</td>
-                    <td>{{this.imageUrl}}</td>
-                    <td>{{#if this.published}}&#10004;{{/if}}</td>
                     <td>{{this.author}}</td>
-                    <td>{{this.category.name}}</td>
-                    <td>
+                    <td>{{this.view}}</td>
+                    <td class="action-buttons">
                         <button class="edit-button" data-id="{{this.id}}">Sửa</button>
-                        <button class="delete-button" data-id="{{this.id}}">Xóa</button>
+                        <form action="/admin/delete/article/{{this.id}}" method="GET" class="delete-form">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="delete-button" data-id="{{this.id}}">Xóa</button>
+                        </form>
                     </td>
                 </tr>
                 {{/each}}
@@ -43,8 +40,7 @@
     <div class="modal-content">
         <span class="close-button">&times;</span>
         <h2>Cập nhật thông tin bài viết</h2>
-        <form action="admin/article/{{this.id}}" method="post" id="edit-article-form-{{this.id}}">
-            <!-- Trường ẩn để chỉ định hành động PUT -->
+        <form action="/admin/article/{{this.id}}" method="POST" id="edit-article-form-{{this.id}}">
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" name="id" value="{{this.id}}">
             <div class="form-group">
@@ -77,22 +73,8 @@
                 <input type="checkbox" id="article-published-{{this.id}}" name="published" {{#if
                     this.published}}checked{{/if}}>
             </div>
-            <!-- Uncomment and use if categories are needed -->
-            <!--
-    <div class="form-group">
-        <label for="article-category-{{this.id}}">Category:</label>
-        <select id="article-category-{{this.id}}" name="category" required>
-            {{#each ../categories}}
-            <option value="{{this.id}}" {{#ifEquals this.id ../category.id}}selected{{/ifEquals}}>
-                {{this.name}}
-            </option>
-            {{/each}}
-        </select>
-    </div>
-    -->
             <button type="submit">Lưu</button>
         </form>
-
     </div>
 </div>
 {{/each}}

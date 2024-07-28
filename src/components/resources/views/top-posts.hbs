@@ -1,1 +1,27 @@
-<p>top post</p>
+<div class="main-content">
+    <div class="user-management">
+        <h1>Bài Viết Nổi Bật</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tiêu đề</th>
+                    <th>Mô tả</th>
+                    <th>Tác giả</th>
+                    <th>Lượt xem</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each articleTop}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.title}}</td>
+                    <td>{{this.description}}</td>
+                    <td>{{this.author}}</td>
+                    <td>{{this.view}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
