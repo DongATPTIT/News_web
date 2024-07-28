@@ -19,30 +19,51 @@ export class ArticleService {
         }
     }
     async getArticles() {
-        const articles = await this.articleRepo.createQueryBuilder('article')
-            .leftJoinAndSelect('article.category', 'category')
-            .select(['article.id', 'article.content', 'article.title', 'article.description', 'article.keyword', 'article.imageUrl', 'article.published', 'article.author', 'article.view', 'category.name'])
-            .getMany();
-        return articles;
+        try {
+            const articles = await this.articleRepo.createQueryBuilder('article')
+                .leftJoinAndSelect('article.category', 'category')
+                .select(['article.id', 'article.content', 'article.title', 'article.description', 'article.keyword', 'article.imageUrl', 'article.published', 'article.author', 'article.view', 'category.name'])
+                .getMany();
+            return articles;
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     async update(res: Response, id: number, data: ArticleDto) {
-        const article = await this.articleRepo.findOne({ where: { id } });
-        if (!article) {
-            res.send(`Article with id ${id} not found`);
-        } return await this.articleRepo.update({ id: id }, data);
+        try {
+            const article = await this.articleRepo.findOne({ where: { id } });
+            if (!article) {
+                res.send(`Article with id ${id} not found`);
+            }
+            return await this.articleRepo.update({ id: id }, data);
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     async delete(res: Response, id: number) {
-        const article = await this.articleRepo.findOne({ where: { id } });
-        if (!article) {
-            res.send(`Article with id ${id} not found`);
-        } return await this.articleRepo.delete({ id: id });
+        try {
+            const article = await this.articleRepo.findOne({ where: { id } });
+            if (!article) {
+                res.send(`Article with id ${id} not found`);
+            }
+            return await this.articleRepo.delete({ id: id });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     async getDetail(res: Response, id: number) {
-        const article = await this.articleRepo.findOne({ where: { id: id } });
-        return article
+        try {
+            const article = await this.articleRepo.findOne({ where: { id: id } });
+            return article;
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 
     async updateView(res: Response, id: number) {
@@ -60,11 +81,16 @@ export class ArticleService {
     }
 
     async getTopPost() {
-        const articleRepository = await this.articleRepo.createQueryBuilder('article')
-            .orderBy('article.view', 'DESC')
-            .limit(10)
-            .getMany();
-        return articleRepository
+        try {
+            const articleRepository = await this.articleRepo.createQueryBuilder('article')
+                .orderBy('article.view', 'DESC')
+                .limit(10)
+                .getMany();
+            return
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 
 

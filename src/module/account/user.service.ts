@@ -28,7 +28,7 @@ export class UserService {
 
         }
         catch (err) {
-            console.log("Internal server Error");
+            console.log("Server Lỗi");
             throw err;
         }
     }
@@ -56,30 +56,60 @@ export class UserService {
         }
         catch (err) {
             console.log(err);
-            return res.status(500).send('Internal server error');
+            return res.status(500).send('Sever lỗi');
         }
     }
     async getUser() {
-        const user = await this.userRepository.find({ where: { role: Role.USER } })
-        return user;
+        try {
+            const user = await this.userRepository.find({ where: { role: Role.USER } })
+            return user;
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 
     async update(res: Response, id: number, data: any) {
-        const article = await this.userRepository.findOne({ where: { id } });
-        if (!article) {
-            // res.send(`Article with id ${id} not found`);
+        try {
+            const article = await this.userRepository.findOne({ where: { id } });
+            if (!article) {
+                res.send(` bài viêt k tồn tại`);
+            }
+            const user = await this.userRepository.update(id, data);
+            return user;
         }
-        const user = await this.userRepository.update(id, data);
-        return user;
+        catch (err) {
+            console.log(err);
+        }
     }
 
     async getDetail(id: number) {
-        const user = await this.userRepository.findOne({ where: { id } });
-        return user;
+        try {
+            const user = await this.userRepository.findOne({ where: { id } });
+            return user;
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 
     async delete(id: number) {
-        const user = await this.userRepository.delete(id);
-        return user;
+        try {
+            const user = await this.userRepository.delete(id);
+            return user;
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+    async getUsers() {
+        try {
+            const user = await this.userRepository.find({ where: { role: Role.USER } })
+            return user;
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 }

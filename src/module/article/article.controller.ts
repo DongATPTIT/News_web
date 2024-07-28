@@ -54,14 +54,6 @@ export class ArticleController {
         res.redirect('/admin/dashboard/post-management')
     }
 
-    // clientGetArticle = async (req: Request, res: Response) => {
-    //     const articles = await this.articlesService.getArticles();
-    //     res.render('/client/home', {
-    //         layout: 'client',
-    //         articles
-    //     })
-    // }
-
     update = async (req: Request, res: Response) => {
         const id = Number(req.params.id);
         const body = req.body;

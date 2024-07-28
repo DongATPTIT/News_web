@@ -1,18 +1,13 @@
 import { Request, Response } from "express";
-import { ArticleService } from "./article.service";
-import { ArticleDto } from "./dtos/article.dto";
-import { AccountService } from "./account.service";
-import { UserService } from "../account/user.service";
+import { UserService } from "./user.service";
 
 export class AccountController {
-    private accountService: AccountService;
     private userService: UserService;
     constructor() {
-        this.accountService = new AccountService();
         this.userService = new UserService();
     }
     getAccount = async (req: Request, res: Response) => {
-        const users = await this.accountService.getUsers();
+        const users = await this.userService.getUsers();
         console.log(users)
         res.render('account-management', { layout: 'account-management', users })
     }
