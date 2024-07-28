@@ -1,1 +1,56 @@
-<p>info</p>
+<div class="main-content">
+    <div class="user-management">
+        <h1>Thông tin người dùng</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tên</th>
+                    <th>Username</th>
+                    <th>Mật khẩu</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each user}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.username}}</td>
+                    <td></td>
+                    <td class="action-buttons">
+                        <button class="edit-button" data-id="{{this.id}}">Sửa</button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Edit Article Modal -->
+{{#each user}}
+<div id="edit-article-modal-{{this.id}}" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Cập nhật thông tin </h2>
+        <form action="/client/update/{{this.id}}" method="POST" id="edit-article-form-{{this.id}}">
+            <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="id" value="{{this.id}}">
+            <div class="form-group">
+                <label for="article-content-{{this.id}}">Tên:</label>
+                <textarea id="article-content-{{this.id}}" name="name">{{this.name}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="article-title-{{this.id}}">Username:</label>
+                <input type="text" id="article-title-{{this.id}}" name="username" value="{{this.username}}">
+            </div>
+            <div class="form-group">
+                <label for="article-description-{{this.id}}">Password:</label>
+                <textarea id="article-description-{{this.id}}" name="password"></textarea>
+            </div>
+            <button type="submit">Lưu</button>
+        </form>
+    </div>
+</div>
+{{/each}}

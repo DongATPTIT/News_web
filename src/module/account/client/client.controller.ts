@@ -43,7 +43,6 @@ export class ClientController {
             res.render("detail", {
                 layout: "client",
                 post,
-                // categories: categories.slice(0, 3),
             });
         } catch (error) {
             res.status(500).json({
@@ -57,17 +56,30 @@ export class ClientController {
         await this.userService.login(res, req, body);
     }
 
-    getInfo = async (req: Request, res: Response) => {
-        const info = await this.userService.getDetail(Number(req.params.id));
-        const cookies = cookie.parse(req.headers.cookie || '');
-        console.log(cookies)
+    getInfo = async (req: any, res: Response) => {
+        const user = req?.user;
+        console.log(user);
         res.render("info-client", {
             layout: "client",
-            info,
-            // categories: categories.slice(0, 3),
+            user: [user]
         });
     }
     getLogOut = async (req: Request, res: Response) => {
         res.clearCookie('token').redirect('/');
+    };
+
+    updateUser = async (req: any, res: Response) => {
+        const user = req?.user;
+        const data = req.body;
+        delete data?._method;
+        if (data?.password == "") {
+            delete data?.password;
+        }
+        if (data?.username === user?.username) {
+            delete data?.username;
+        }
+        console.log(data)
+        await this.userService.update(res, user.id, data);
+        res.redirect('/client/info');
     };
 }

@@ -69,9 +69,15 @@ export class UserService {
 
     async update(res: Response, id: number, data: any) {
         try {
-            const article = await this.userRepository.findOne({ where: { id } });
-            if (!article) {
+            const client = await this.userRepository.findOne({ where: { id } });
+            if (!client) {
                 res.send(` bài viêt k tồn tại`);
+            }
+            if (data?.username) {
+                const client = await this.userRepository.findOne({ where: { username: data.username } });
+                if (client) {
+                    res.send(`username đã tồn tại`);
+                }
             }
             const user = await this.userRepository.update(id, data);
             return user;
