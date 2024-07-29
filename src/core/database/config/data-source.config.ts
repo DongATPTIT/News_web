@@ -5,7 +5,7 @@ export const myDataSource = new DataSource({
     host: "localhost",
     port: 3306,
     username: "root",
-    password: "",
+    password: "root",
     database: "news_web",
     entities: ["src/core/database/entity/*.ts"],
     synchronize: true,

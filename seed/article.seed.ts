@@ -15,7 +15,7 @@ async function createArticles() {
     }
 
     const articles: any = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 20; i++) {
         articles.push({
             content: faker.lorem.text(),
             title: faker.lorem.sentence(),
